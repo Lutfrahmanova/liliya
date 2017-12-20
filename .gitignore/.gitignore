@@ -1,0 +1,127 @@
+const questions =[
+{
+	step: 1,
+	q: 'Где вы сейчас находитесь?',
+	a: [
+	{
+		text: 'в IT-парк',
+		nextStep: 2
+	},
+	{
+		text: 'На работе',
+		nextStep: 'lose'
+
+	}
+	]
+},
+{
+	step: 2,
+	q: 'Чем вы сейчас занимаетесь?',
+	a: [
+	{
+		text: 'Изучаю PHP',
+		nextStep: 'lose'
+	},
+	{
+		text: 'Изучаю MODX',
+		nextStep: 4
+	},
+	{
+		text: 'Изучаю JS',
+		nextStep: 3
+	}
+	]
+},
+{
+	step: 3,
+	q: 'И как у вас получается,',
+	a: [
+	{
+		text: 'Хорошо',
+		nextStep: 'congratulations'
+	},
+	{
+		text: 'Не очень хорошо',
+		nextStep: 'comBackLater'
+	}
+	]
+}
+];
+
+
+function renderQuestion(step) {
+	let question = null;
+	for (let i = 0; i < questions.length; i++) {
+		if (questions[i].step === step) {
+			question = questions[i];
+			break; 
+		}
+
+	}
+	// console.log(question); JS
+	if (!question) return false;
+	document.getElementById('current-step').value = question.step;
+	document.getElementById('question').textContent = question.q;
+	document
+	.getElementById('answers').innerHTML='';
+	for (let i = 0; i < question.a.length; i++) {
+    //  Старое (правильное)
+    // const input = document.createElement('input');
+    // input.type = 'radio';
+    // input.name = 'answers';
+    // input.value = question.a[i].nextStep;
+    // const span = document.createElement('span');
+    // span.textContent = question.a[i].text;
+    // const text = document.createTextNode();
+    // input.appendChild(text);
+    // document.getElementById('answers').appendChild(input).appendChild(span);
+    // Новое (временное решение)
+    const input = `<input type="radio" name="answers" value="${question.a[i].nextStep}" />${question.a[i].text}`;
+    document.getElementById('answers').innerHTML += input;
+}
+}
+
+renderQuestion(1);
+
+document
+.getElementById('send-answer')
+.addEventListener('click', function () {
+	const currentStep = document
+	.getElementById('current-step');
+	const answers = document
+	.getElementsByName('answers');
+	for (let i = 0; i < answers.length; i++) {
+		if (answers[i].checked) {
+			switch (answers[i].value) {
+				case 'finish':
+				//Выигрыш
+				alert('Вы прошли квест')
+				window.location.reload();
+				break;
+				case 'lose':
+					//Проигрыш
+					alert('Сожалеем, попробуйте ещё раз');
+					renderQuestion(1);
+					break;
+					case 'congratulations':
+					return congratulations();
+					case 'comBackLater':
+					return comBackLater();
+
+				default:
+					renderQuestion(answers[i].value);
+					break;
+
+				}
+			}
+			}	
+		});
+
+
+function congratulations(){
+ 	insertImage('http://www.amic.ru/images/news/news/378306_size2.jpg')
+}
+function comBackLater(){
+	insertImage('http://www.amic.ru/images/news/news/378306_size2.jpg')
+	renderQuestion(1)
+}
