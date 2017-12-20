@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+<input type="hidden" id="current-step"/>
+<div id="result"></div>
+<div id="question"></div>
+<div id="answers"></div>
+<div class="actions"></div>
+<button type="button" id="send-answer">
+	Отправить
+</button>
+<script src="./quest.js"></script>
+
+</body>
+</html>
